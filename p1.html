@@ -43,11 +43,11 @@
 			<div class="slides">
 
 				<section>
-					<h1>BullyFramework & DW Color</h1>
-					<h3>In search of perfect architecture</h3>
+					<h2>BullyFramework & DW Color</h2>
+                    <h4><font color="#888888">In search of perfect architecture</font></h4>
 					<p>
-						<small>Created by Eugene Mihailenco / <a
-                                href="https://github.com/randomize">@randomize</a></small>
+						<small>Created by Eugene Mihailenco / <a href="https://github.com/randomize">@randomize</a>
+                        <sub>Typed with NeoVim in Dvorak</sub></small>
 					</p>
 				</section>
 
@@ -85,44 +85,212 @@
 					<section>
 						<h2>Setup</h2>
                         <p>Just add as submodule</p>
-                        <pre><code class="hljs" data-trim contenteditable>
-                        git submodule add git@gitlab.bullytech.local:internal/bully-framework.git
+                        <pre><code>
+git submodule add \
+  git@gitlab.bullytech.local:internal/bully-framework.git \
+  Assets/Bully.Core/BullyFramework
                         </code></pre>
                         <p>Create branch xyzw-improvements to contribute</p>
 					</section>
 					<section>
+						<h2>Setup (honest version)</h2>
+                        <p>Get access to internal group, make sure path matches, SSH clone master and get lfs error, clone develop, write this code:</p>
+                        <img src="./img/const.png">
+                        <p>and get some random warnings from it :)</p>
+					</section>
+					<section>
 						<h2>Highlights</h2>
+					</section>
+					<section>
+						<h2>Scenes view</h2>
+                        <p>&lt;F3&gt;, also has selection history</p>
+                        <img src="./img/toolbox.png">
+                        <img src="./img/toolbox2.png">
+					</section>
+					<section>
+						<h2>Prefab tool</h2>
+                        <p>&lt;F4&gt;, batch apply, diagnose dirty</p>
+                        <img src="./img/ptool.png">
+					</section>
+					<section>
+						<h2>Bully.Log</h2>
+                        <p>Wraps Debug.Log and shields, Conditionals</p>
+                        <img src="./img/bulog.png">
+					</section>
+					<section>
+						<h2>Copy path</h2>
+                        <p>Because why not</p>
+                        <img src="./img/copy.png">
+					</section>
+					<section>
+						<h2>Diagnostics</h2>
+                        <p>Tools that check invariants</p>
+                        <img src="./img/diag.png">
+					</section>
+					<section>
+						<h2>More</h2>
+                        <p>UI helpers, batch mark, some deprecated and wip stuff</p>
+                        <img src="./img/ui.png">
 					</section>
 				</section>
 
 				<section>
-					<h2>Color Project</h2>
-                    <p>UI intensive, </p>
+					<section>
+                        <h2>DW Color Project</h2>
+                        <p>UI intensive, 2D, Animations rich</p>
+					</section>
+					<section>
+						<h2>Similar projets</h2>
+                        <p>Pella, CDM, Lanterns</p>
+						<p>Screens, Panels, reusable UI elements - actually MVC</p>
+					</section>
+					<section>
+						<h2>Notions used</h2>
+                        <p><strong>Screen</strong> - Controller, specialized, thin, glues things and provides simple logic, prefab root</p>
+                        <p><strong>Manager</strong> - Controller, reusable, UI agnostic, heavy logic, prefab root can have settings</p>
+                        <p><strong>Panel</strong> - big UI set of elements seen together - can have interface to raise level of abstraction, sometimes reusable,  prefab root</p>
+                        <p><strong>Item</strong> - UI related model data</p>
+					</section>
+					<section>
+						<h2>Screens</h2>
+                        <p>In Color - nonlinear</p>
+                        <img src="./img/fsm.png">
+					</section>
+					<section>
+						<h2>Screens</h2>
+                        <p>Editor time yaml</p>
+                        <img src="./img/yaml.png">
+					</section>
+					<section>
+						<h2>Screens</h2>
+                        <p>Really just matrix</p>
+                        <img src="./img/serial.png">
+					</section>
+					<section>
+						<h2>Animations hell</h2>
+                        <p>CDM failed badly at that point</p>
+						<p>Color did better, but still has issues</p>
+					</section>
+					<section>
+						<h2>Transitions</h2>
+                        <p>Trigger initiates</p>
+						<p>Request is sent</p>
+						<p>Wait for confirmation</p>
+						<p>Callbacks for each phase</p>
+					</section>
+					<section>
+						<h2>Singletons</h2>
+                        <p>Most common pattern with most bad reputation</p>
+                        <ul>
+                            <li>Bob's Singleton+</li>
+                            <li>PersistentSingleton</li>
+                        </ul>
+					</section>
+					<section>
+						<h2>Singletons</h2>
+                        <img src="./img/order.png">
+					</section>
+					<section>
+						<h2>Singletons</h2>
+						<p>Merging into one root</p>
+                        <img src="./img/sin.png">
+					</section>
+					<section>
+						<h2>Singletons</h2>
+						<p>Controlled instantiation</p>
+                        <img src="./img/sin2.png">
+					</section>
+					<section>
+						<h2>DI</h2>
+						<p>Highly controversial</p>
+						<p>Most C# impl use reflexion</p>
+						<p>In simple case just have derived behavior with vars</p>
+					</section>
+					<section>
+						<h2>Items & Content manager</h2>
+						<p>SO - great but loads each internal object</p>
+						<p>Split description (Item) and date (Content)</p>
+						<p>Items are used were selection choise made</p>
+						<p>Once it made, data is loaded</p>
+					</section>
+					<section>
+						<h2>Content manager</h2>
+						<p>Cannot reference directly</p>
+						<p>Need be string id</p>
+						<p>But need an interface</p>
+					</section>
+					<section>
+						<h2>Content manager</h2>
+					</section>
 				</section>
 
 				<section>
-					<h2>Point of View</h2>
+					<section>
+                        <h2>DW Color Minor Highlights</h2>
+					</section>
+					<section>
+						<h2>Dependencies</h2>
+                        <ul>
+                            <li>TouchScript</li>
+                            <li>DOTween</li>
+                        </ul>
+					</section>
+					<section>
+						<h2>Editor helpers</h2>
+                        <img src="./img/context.png">
+					</section>
+					<section>
+						<h2>Editor helpers</h2>
+                        <img src="./img/topbuttons.png">
+					</section>
+					<section>
+						<h2>Tech problems</h2>
+                        <p>Painting - done with SetPixels, minimum reallocations, but cpu based</p>
+                        <p>Paint bucket - gpu based, selection shader, sampling technique</p>
+						<p>Vuforia capturing</p>
+					</section>
+					<section>
+						<h2>Went well</h2>
+                        <p>CodeGeneration</p>
+                        <p>No scene conflicts</p>
+						<p>Subscreen system</p>
+					</section>
+					<section>
+						<h2>Fails and hacks</h2>
+                        <p>All panels are in the scene</p>
+                        <p>Trasitions</p>
+						<p>Vuforia capturing</p>
+					</section>
+				</section>
+
+				<section>
+					<h2>Next steps</h2>
 					<p>
-						Press <strong>ESC</strong> to enter the slide overview.
-					</p>
-					<p>
-						Hold down alt and click on any element to zoom in on it using <a href="http://lab.hakim.se/zoom-js">zoom.js</a>. Alt + click anywhere to zoom back out.
+                        <ul>
+                            <li>Simplify setup</li>
+                            <li>Shader lib</li>
+                            <li>Lunar</li>
+                            <li>Additively generated code</li>
+                        </ul>
 					</p>
 				</section>
 
 				<section>
-					<h2>Touch Optimized</h2>
+					<h2>Other submodules</h2>
 					<p>
-						Presentations look great on touch devices, like mobile phones and tablets. Simply swipe through your slides.
+                    Look at <a href="http://gitlab.bullytech.local/groups/internal">Gitlab internal</a> group
 					</p>
+                    <ul>
+                        <li>Reporter</li>
+                        <li>TouchScript</li>
+                        <li>Spine runtime</li>
+                        <li>Cardboard sdk</li>
+                        <li><del>Vuforia</del></li>
+                    </ul>
 				</section>
 
 				<section style="text-align: left;">
 					<h1>THE END</h1>
-					<p>
-						- <a href="http://slides.com">Try the online editor</a> <br>
-						- <a href="https://github.com/hakimel/reveal.js">Source code &amp; documentation</a>
-					</p>
 				</section>
 
 			</div>
