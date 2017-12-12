@@ -1,0 +1,468 @@
+<!doctype html>
+<!--
+script:
+
+This is video postmortrem on Synegry Blasteroids Hololens game.
+I would like to start tradition of making dev post mortrems where
+we share implementation details, challenges and solutions.
+Unfortunately we dont do regular dev regroups to discuss such
+thisngs interactively, so video will be more accessible and convinient way 
+to share knowledge.
+
+Split into chunks:
+    + Blasteroids quick demo and info
+    + Holo platform
+    + Implementation details
+
+
+
+Blasteroids, mobile game, for Hololons device, very quick turn
+video demo
+
+
+
+Holo - windows machine, some limited version of Windows, 
+to develop you need Windows 10 machine with VStudio and SDK.
+Unity windows store platform  installed.
+device has develop mode and a web interface, just like router.
+
+
+
+Additive screen, small fov,
+
+Unity:
+ Build in
+ To try - emulation, doesnt work 5.5.1
+
+Unity VR.WSA namespace
+
+ifdef FNXCORU
+endif
+
+
+Deployment
++ ad-hoc - "Run Without Debugger", on device or remote machine
++ packaging
+
+Not covered:
++ Store submission
+
+
+Holo toolkit:
++ Raycasting - on focus, on click
++ Gesture manager
++ Voice recognize
++ Emulation in edtior to some degree (only worko on Win)
++ Anchoring
++ Mesh (not used)
++ Tagalog bugs, scale issue and look at me;
+
+
+Perfarmance:
+Always profile release builds.
+Check quality settings, lighting settings off
+No standard, no shadows, fillrate bound.
+Drawcall optimization - has instannginc
+
+
+To try - HLSL optimization, deep profiler explare -
+frame capture
+
+Case study - world anchoring
+pretty simple use case - calibrate relative to point,
+camera spawns at 0 0 0, then moves
+never rely on worldspace, only relative
+
+
+Case study - capture screens and save
+C# Windows.Store histary, no env vars %userprofile%
+bug in Unity, bug in Store PhotoLibrary
+interrupts things
+
+
+Architecture
+Quick turn - none, just singletones, pooling based
+on factory, fsm on coroutines.
+One pitfall - if takes
+Panel Show() as coroutine.
+Lifecycle: Init, InitInstance, ResetInstance - base behaviour, never used :)
+
+new scripts:
+ [AutoGetComponent]
+ Quick and dirty VRLog port, voice commands
+
+Icon setup is tricky :) (show screen) and base sizes
+
+
+
+
+
+Ideas for post mortrems:
+ + D2 native plugins case study
+ + Ogstar generation system
+
+ //-->
+
+
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>BullyFramework and Color arch</title>
+
+		<meta name="description" content="Quick presentation on BF and its
+        improvements - written in Dvorak">
+		<meta name="author" content="Mihailenco Eugene">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+				<section>
+					<h2>BullyFramework & DW Color</h2>
+                    <h4><font color="#888888">In search of perfect architecture</font></h4>
+					<p>
+						<small>Created by Eugene Mihailenco / <a href="https://github.com/randomize">@randomize</a>
+                        <sub>Typed with NeoVim in Dvorak</sub></small>
+					</p>
+				</section>
+
+				<section>
+					<p>
+                        <h3>Contents</h3>
+                        <ul>
+                            <li>BullyFramework Project</li>
+                            <li>Color Architecture</li>
+                            <li>Color Improvements</li>
+                            <li>Next steps</li>
+                        </ul>
+					</p>
+				</section>
+
+<!-- bullyframework -->
+<!-- subrepo -->
+<!-- flow &#45; xxxx&#45;improvenets -->
+<!--  -->
+<!-- color arch -->
+<!-- screens, panels, managers -->
+<!--  -->
+<!-- sins and root sin -->
+<!--  -->
+<!-- on demand load ano content manager -->
+<!--  -->
+<!-- failures &#45; content man not friendly, all ui in scene -->
+				<!-- Example of nested vertical slides -->
+				<section>
+					<section>
+						<h2>BullyFramework</h2>
+                        <p>Standard submodule to include to each project</p>
+						<p>Helper scripts, build support, reusable stuff </p>
+					</section>
+					<section>
+						<h2>Setup</h2>
+                        <p>Just add as submodule</p>
+                        <pre><code>
+git submodule add \
+  git@gitlab.bullytech.local:internal/bully-framework.git \
+  Assets/Bully.Core/BullyFramework
+                        </code></pre>
+                        <p>Create branch xyzw-improvements to contribute</p>
+					</section>
+					<section>
+						<h2>Setup (honest version)</h2>
+                        <p>Get access to internal group, make sure path matches, SSH clone master and get lfs error, clone develop, write this code:</p>
+                        <img src="./img/const.png">
+                        <p>and get some random warnings from it :)</p>
+					</section>
+					<section>
+						<h2>Highlights</h2>
+					</section>
+					<section>
+						<h2>Scenes view</h2>
+                        <p>&lt;F3&gt;, also has selection history</p>
+                        <img src="./img/toolbox.png">
+                        <img src="./img/toolbox2.png">
+					</section>
+					<section>
+						<h2>Prefab tool</h2>
+                        <p>&lt;F4&gt;, batch apply, diagnose dirty</p>
+                        <img src="./img/ptool.png">
+					</section>
+					<section>
+						<h2>Bully.Log</h2>
+                        <p>Wraps Debug.Log and shields, Conditionals</p>
+                        <img src="./img/bulog.png">
+					</section>
+					<section>
+						<h2>Copy path</h2>
+                        <p>Because why not</p>
+                        <img src="./img/copy.png">
+					</section>
+					<section>
+						<h2>Diagnostics</h2>
+                        <p>Tools that check invariants</p>
+                        <img src="./img/diag.png">
+					</section>
+					<section>
+						<h2>More</h2>
+                        <p>UI helpers, batch mark, some deprecated and wip stuff</p>
+                        <img src="./img/ui.png">
+					</section>
+					<section>
+						<h2>Lots More</h2>
+                        <p>EasyPrefs, FTUEManager, BullyGradient, DebugScreen, CircleOutline,
+                            StupidImage, New UI system, InternetChecker, Extension methods,
+                            Content system, asset string, animators,
+                            LetterSpacing, CanvasRendererEditor,
+                            project structure setup, templates, bullylib,
+                            Hierachy\Stats view, Trasform override... 
+                            </p>
+					</section>
+				</section>
+
+				<section>
+					<section>
+                        <h2>DW Color Project</h2>
+                        <p>UI intensive, 2D, Animations rich</p>
+					</section>
+					<section>
+						<h2>Similar projets</h2>
+                        <p>Pella, CDM, Lanterns</p>
+						<p>Screens, Panels, reusable UI elements - actually MVC</p>
+					</section>
+					<section>
+						<h2>Notions used</h2>
+                        <p><strong>Screen</strong> - Controller, specialized, thin, glues things and provides simple logic, prefab root</p>
+                        <p><strong>Manager</strong> - Controller, reusable, UI agnostic, heavy logic, prefab root can have settings</p>
+                        <p><strong>Panel</strong> - big UI set of elements seen together - can have interface to raise level of abstraction, sometimes reusable,  prefab root</p>
+                        <p><strong>Item</strong> - UI related model data</p>
+					</section>
+					<section>
+						<h2>Screens</h2>
+                        <p>In Color - nonlinear</p>
+                        <img src="./img/fsm.png">
+					</section>
+					<section>
+						<h2>Screens</h2>
+                        <p>Editor time yaml</p>
+                        <img src="./img/yaml.png">
+					</section>
+					<section>
+						<h2>Screens</h2>
+                        <p>Really just matrix</p>
+                        <img src="./img/serial.png">
+					</section>
+					<section>
+						<h2>Animations hell</h2>
+                        <p>CDM failed badly at that point</p>
+						<p>Color did better, but still has issues</p>
+					</section>
+					<section>
+						<h2>Transitions</h2>
+                        <p>Trigger initiates</p>
+						<p>Request is sent</p>
+						<p>Wait for confirmation</p>
+						<p>Callbacks for each phase</p>
+					</section>
+					<section>
+						<h2>Singletons</h2>
+                        <p>Most common pattern with most bad reputation</p>
+                        <ul>
+                            <li>Bob's Singleton+</li>
+                            <li>PersistentSingleton</li>
+                        </ul>
+					</section>
+					<section>
+						<h2>Singletons</h2>
+                        <img src="./img/order.png">
+					</section>
+					<section>
+						<h2>Singletons</h2>
+						<p>Merging into one root</p>
+                        <img src="./img/sin.png">
+					</section>
+					<section>
+						<h2>Singletons</h2>
+						<p>Controlled instantiation</p>
+                        <img src="./img/sin2.png">
+					</section>
+					<section>
+						<h2>DI</h2>
+						<p>Highly controversial</p>
+						<p>Most C# impl use reflexion</p>
+						<p>In simple case just have derived behavior with vars</p>
+					</section>
+					<section>
+						<h2>Items & Content manager</h2>
+						<p>SO - great but loads each internal object</p>
+						<p>Split description (Item) and date (Content)</p>
+						<p>Items are used were selection choise made</p>
+						<p>Once it made, data is loaded</p>
+					</section>
+					<section>
+						<h2>Content manager</h2>
+						<p>Cannot reference directly</p>
+						<p>Need be string id</p>
+						<p>But need an interface</p>
+					</section>
+					<section>
+						<h2>Content data</h2>
+                        <img src="./img/contentm.png">
+					</section>
+					<section>
+						<h2>Actual setup</h2>
+                        <img src="./img/ggidc.png">
+                        <img src="./img/ggidv.png">
+					</section>
+					<section>
+						<h2>Actual setup</h2>
+                        <img src="./img/croom.png">
+					</section>
+					<section>
+						<h2>Code/Scene generation</h2>
+                        <img src="./img/gen.png">
+					</section>
+				</section>
+
+				<section>
+					<section>
+                        <h2>DW Color Minor Highlights</h2>
+					</section>
+					<section>
+						<h2>Starring</h2>
+                        <ul>
+                            <li>TouchScript</li>
+                            <li>DOTween</li>
+                            <li>Lunar</li>
+                        </ul>
+					</section>
+					<section>
+						<h2>Lunar</h2>
+                        <img src="./img/lunar.png">
+					</section>
+					<section>
+						<h2>Editor helpers</h2>
+                        <img src="./img/context.png">
+					</section>
+					<section>
+						<h2>Editor helpers</h2>
+                        <img src="./img/topbuttons.png">
+					</section>
+					<section>
+						<h2>Not-only-editor helpers</h2>
+                        <img src="./img/run.png">
+					</section>
+					<section>
+						<h2>Tech problems</h2>
+                        <p>Painting - done with SetPixels, minimum reallocations, but cpu based</p>
+                        <p>Paint bucket - gpu based, selection shader, sampling technique</p>
+						<p>Vuforia capturing</p>
+					</section>
+					<section>
+						<h2>Went well</h2>
+                        <p>Code Generation</p>
+                        <p>Large prefabization - no conflicts</p>
+						<p>Assertions</p>
+						<p>Subscreen system</p>
+					</section>
+					<section>
+						<h2>Fails and hacks</h2>
+                        <p>All panels are in the scene, init hack</p>
+                        <p>Splitting/merging screens</p>
+                        <p>Hard to extend with generated staff</p>
+                        <p>Setup of content wasnt automated</p>
+					</section>
+				</section>
+
+				<section>
+					<h2>Next steps</h2>
+					<p>
+                        <ul>
+                            <li>Simplify setup, document it</li>
+                            <li>Shader lib</li>
+                            <li>Lunar</li>
+                            <li>Additively generated code</li>
+                        </ul>
+					</p>
+				</section>
+
+				<section>
+					<h2>Other submodules</h2>
+					<p>
+                    Look at <a href="http://gitlab.bullytech.local/groups/internal">Gitlab internal</a> group
+					</p>
+                    <ul>
+                        <li>Reporter</li>
+                        <li>TouchScript</li>
+                        <li>Spine runtime</li>
+                        <li>Cardboard sdk</li>
+                        <li><del>Vuforia</del></li>
+                    </ul>
+				</section>
+
+				<section style="text-align: left;">
+					<h1>THE END</h1>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
