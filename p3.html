@@ -8,10 +8,9 @@ vim: ft=html tw=200
 	<head>
 		<meta charset="utf-8">
 
-		<title>BullyFramework and Color arch</title>
+		<title>Bully Build System 2.0</title>
 
-		<meta name="description" content="Quick presentation on BF and its
-        improvements - written in Dvorak">
+		<meta name="description" content="Quick presentation on build tools improvements">
 		<meta name="author" content="Mihailenco Eugene">
 
 		<meta name="apple-mobile-web-app-capable" content="yes">
@@ -56,15 +55,6 @@ vim: ft=html tw=200
                     <aside class="notes">
 						Hello
 						In this video we will talk about our new <b>build</b> system
-
-features:
-move build responsibilities to Unity side
-extensibilty
-  project profiles
-   in past was done on jonkins \ teamcity
-
-  global machine profiles
-
                     </aside>
 				</section>
 
@@ -143,83 +133,15 @@ extensibilty
 				</section>
 
 				<section>
-					<section>
-                        <h2>DW Color Minor Highlights</h2>
-					</section>
-					<section>
-						<h2>Starring</h2>
-                        <ul>
-                            <li>TouchScript</li>
-                            <li>DOTween</li>
-                            <li>Lunar</li>
-                        </ul>
-					</section>
-					<section>
-						<h2>Lunar</h2>
-                        <img src="./img/lunar.png">
-					</section>
-					<section>
-						<h2>Editor helpers</h2>
-                        <img src="./img/context.png">
-					</section>
-					<section>
-						<h2>Editor helpers</h2>
-                        <img src="./img/topbuttons.png">
-					</section>
-					<section>
-						<h2>Not-only-editor helpers</h2>
-                        <img src="./img/run.png">
-					</section>
-					<section>
-						<h2>Tech problems</h2>
-                        <p>Painting - done with SetPixels, minimum reallocations, but cpu based</p>
-                        <p>Paint bucket - gpu based, selection shader, sampling technique</p>
-						<p>Vuforia capturing</p>
-					</section>
-					<section>
-						<h2>Went well</h2>
-                        <p>Code Generation</p>
-                        <p>Large prefabization - no conflicts</p>
-						<p>Assertions</p>
-						<p>Subscreen system</p>
-					</section>
-					<section>
-						<h2>Fails and hacks</h2>
-                        <p>All panels are in the scene, init hack</p>
-                        <p>Splitting/merging screens</p>
-                        <p>Hard to extend with generated staff</p>
-                        <p>Setup of content wasnt automated</p>
-					</section>
-				</section>
-
-				<section>
-					<h2>Next steps</h2>
+					<h2>Build System 2.0</h2>
 					<p>
                         <ul>
-                            <li>Simplify setup, document it</li>
-                            <li>Shader lib</li>
-                            <li>Lunar</li>
-                            <li>Additively generated code</li>
+                            <li>Unity calls stuff</li>
+                            <li>Extensible - profiles</li>
+                            <li>Extensible - build node configs</li>
+                            <li>Better build constants</li>
                         </ul>
 					</p>
-				</section>
-
-				<section>
-					<h2>Other submodules</h2>
-					<p>
-                    Look at <a href="http://gitlab.bullytech.local/groups/internal">Gitlab internal</a> group
-					</p>
-                    <ul>
-                        <li>Reporter</li>
-                        <li>TouchScript</li>
-                        <li>Spine runtime</li>
-                        <li>Cardboard sdk</li>
-                        <li><del>Vuforia</del></li>
-                    </ul>
-				</section>
-
-				<section style="text-align: left;">
-					<h1>THE END</h1>
 				</section>
 
 			</div>
@@ -246,6 +168,7 @@ extensibilty
 					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
 					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
 					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/search/search.js', async: true },
 					{ src: 'plugin/zoom-js/zoom.js', async: true },
 					{ src: 'plugin/notes/notes.js', async: true }
 				]

@@ -1,4 +1,8 @@
 <!doctype html>
+<!-- 
+vim: ft=html tw=200
+-->
+
 <html lang="en">
 
 	<head>
@@ -6,8 +10,7 @@
 
 		<title>BullyFramework and Color arch</title>
 
-		<meta name="description" content="Quick presentation on BF and its
-        improvements - written in Dvorak">
+		<meta name="description" content="Quick presentation on BF and its improvements">
 		<meta name="author" content="Mihailenco Eugene">
 
 		<meta name="apple-mobile-web-app-capable" content="yes">
@@ -352,6 +355,7 @@ git submodule add \
 					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
 					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
 					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/search/search.js', async: true },
 					{ src: 'plugin/zoom-js/zoom.js', async: true },
 					{ src: 'plugin/notes/notes.js', async: true }
 				]
