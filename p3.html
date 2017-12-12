@@ -1,108 +1,7 @@
 <!doctype html>
-<!--
-script:
-
-This is video postmortrem on Synegry Blasteroids Hololens game.
-I would like to start tradition of making dev post mortrems where
-we share implementation details, challenges and solutions.
-Unfortunately we dont do regular dev regroups to discuss such
-thisngs interactively, so video will be more accessible and convinient way 
-to share knowledge.
-
-Split into chunks:
-    + Blasteroids quick demo and info
-    + Holo platform
-    + Implementation details
-
-
-
-Blasteroids, mobile game, for Hololons device, very quick turn
-video demo
-
-
-
-Holo - windows machine, some limited version of Windows, 
-to develop you need Windows 10 machine with VStudio and SDK.
-Unity windows store platform  installed.
-device has develop mode and a web interface, just like router.
-
-
-
-Additive screen, small fov,
-
-Unity:
- Build in
- To try - emulation, doesnt work 5.5.1
-
-Unity VR.WSA namespace
-
-ifdef FNXCORU
-endif
-
-
-Deployment
-+ ad-hoc - "Run Without Debugger", on device or remote machine
-+ packaging
-
-Not covered:
-+ Store submission
-
-
-Holo toolkit:
-+ Raycasting - on focus, on click
-+ Gesture manager
-+ Voice recognize
-+ Emulation in edtior to some degree (only worko on Win)
-+ Anchoring
-+ Mesh (not used)
-+ Tagalog bugs, scale issue and look at me;
-
-
-Perfarmance:
-Always profile release builds.
-Check quality settings, lighting settings off
-No standard, no shadows, fillrate bound.
-Drawcall optimization - has instannginc
-
-
-To try - HLSL optimization, deep profiler explare -
-frame capture
-
-Case study - world anchoring
-pretty simple use case - calibrate relative to point,
-camera spawns at 0 0 0, then moves
-never rely on worldspace, only relative
-
-
-Case study - capture screens and save
-C# Windows.Store histary, no env vars %userprofile%
-bug in Unity, bug in Store PhotoLibrary
-interrupts things
-
-
-Architecture
-Quick turn - none, just singletones, pooling based
-on factory, fsm on coroutines.
-One pitfall - if takes
-Panel Show() as coroutine.
-Lifecycle: Init, InitInstance, ResetInstance - base behaviour, never used :)
-
-new scripts:
- [AutoGetComponent]
- Quick and dirty VRLog port, voice commands
-
-Icon setup is tricky :) (show screen) and base sizes
-
-
-
-
-
-Ideas for post mortrems:
- + D2 native plugins case study
- + Ogstar generation system
-
- //-->
-
+<!-- 
+vim: ft=html tw=200
+-->
 
 <html lang="en">
 
@@ -148,208 +47,98 @@ Ideas for post mortrems:
 			<div class="slides">
 
 				<section>
-					<h2>BullyFramework & DW Color</h2>
-                    <h4><font color="#888888">In search of perfect architecture</font></h4>
+					<h2>Build System 2.0</h2>
+                    <h4><font color="#888888">(now in VR & using BlockChain)</font></h4>
 					<p>
 						<small>Created by Eugene Mihailenco / <a href="https://github.com/randomize">@randomize</a>
-                        <sub>Typed with NeoVim in Dvorak</sub></small>
+                            <sub>Typed <strike>fast</strike> in Dvorak</sub></small>
 					</p>
+                    <aside class="notes">
+						Hello
+						In this video we will talk about our new <b>build</b> system
+
+features:
+move build responsibilities to Unity side
+extensibilty
+  project profiles
+   in past was done on jonkins \ teamcity
+
+  global machine profiles
+
+                    </aside>
 				</section>
 
 				<section>
 					<p>
                         <h3>Contents</h3>
                         <ul>
-                            <li>BullyFramework Project</li>
-                            <li>Color Architecture</li>
-                            <li>Color Improvements</li>
+                            <li>Quick history of 1.0</li>
+                            <li>Whats new in 2.0</li>
+                            <li>Using guidelines</li>
+                            <li>Internals</li>
                             <li>Next steps</li>
                         </ul>
 					</p>
-				</section>
-
-<!-- bullyframework -->
-<!-- subrepo -->
-<!-- flow &#45; xxxx&#45;improvenets -->
-<!--  -->
-<!-- color arch -->
-<!-- screens, panels, managers -->
-<!--  -->
-<!-- sins and root sin -->
-<!--  -->
-<!-- on demand load ano content manager -->
-<!--  -->
-<!-- failures &#45; content man not friendly, all ui in scene -->
-				<!-- Example of nested vertical slides -->
-				<section>
-					<section>
-						<h2>BullyFramework</h2>
-                        <p>Standard submodule to include to each project</p>
-						<p>Helper scripts, build support, reusable stuff </p>
-					</section>
-					<section>
-						<h2>Setup</h2>
-                        <p>Just add as submodule</p>
-                        <pre><code>
-git submodule add \
-  git@gitlab.bullytech.local:internal/bully-framework.git \
-  Assets/Bully.Core/BullyFramework
-                        </code></pre>
-                        <p>Create branch xyzw-improvements to contribute</p>
-					</section>
-					<section>
-						<h2>Setup (honest version)</h2>
-                        <p>Get access to internal group, make sure path matches, SSH clone master and get lfs error, clone develop, write this code:</p>
-                        <img src="./img/const.png">
-                        <p>and get some random warnings from it :)</p>
-					</section>
-					<section>
-						<h2>Highlights</h2>
-					</section>
-					<section>
-						<h2>Scenes view</h2>
-                        <p>&lt;F3&gt;, also has selection history</p>
-                        <img src="./img/toolbox.png">
-                        <img src="./img/toolbox2.png">
-					</section>
-					<section>
-						<h2>Prefab tool</h2>
-                        <p>&lt;F4&gt;, batch apply, diagnose dirty</p>
-                        <img src="./img/ptool.png">
-					</section>
-					<section>
-						<h2>Bully.Log</h2>
-                        <p>Wraps Debug.Log and shields, Conditionals</p>
-                        <img src="./img/bulog.png">
-					</section>
-					<section>
-						<h2>Copy path</h2>
-                        <p>Because why not</p>
-                        <img src="./img/copy.png">
-					</section>
-					<section>
-						<h2>Diagnostics</h2>
-                        <p>Tools that check invariants</p>
-                        <img src="./img/diag.png">
-					</section>
-					<section>
-						<h2>More</h2>
-                        <p>UI helpers, batch mark, some deprecated and wip stuff</p>
-                        <img src="./img/ui.png">
-					</section>
-					<section>
-						<h2>Lots More</h2>
-                        <p>EasyPrefs, FTUEManager, BullyGradient, DebugScreen, CircleOutline,
-                            StupidImage, New UI system, InternetChecker, Extension methods,
-                            Content system, asset string, animators,
-                            LetterSpacing, CanvasRendererEditor,
-                            project structure setup, templates, bullylib,
-                            Hierachy\Stats view, Trasform override... 
-                            </p>
-					</section>
+                    <aside class="notes">
+                        here is our plan<br>
+                        since the new system is 2.0 lets call the old one 1.0 never was called like that, who cares its a breaking change<br><br>
+						We were using automated Unity builds for quite a long, <b>old legendary</b> Bully devs made first
+						pass on it, weve been using it since then (well we replaced BuildServer, but core the same)<br>
+                        Then we will talk about new features, how to use the beast. <br>
+                        If you get bored by that time - can drop there<br>
+                        Internals of implementatino and further improvements.<br>
+					</aside>
 				</section>
 
 				<section>
 					<section>
-                        <h2>DW Color Project</h2>
-                        <p>UI intensive, 2D, Animations rich</p>
+						<h2>Build System 1.0</h2>
+                        <p>Couple of C# wrappers</p>
+                        <img src="./p3img/scripts.png">
+						<aside class="notes">
+							Very simple scripts, little hierachy of platforms<br>
+                            Builder.Build is the entry point, some ugly swich case was creaiting
+							correct instance of PlatformBuilder, which well desn do much
+						</aside>
 					</section>
 					<section>
-						<h2>Similar projets</h2>
-                        <p>Pella, CDM, Lanterns</p>
-						<p>Screens, Panels, reusable UI elements - actually MVC</p>
+						<h2>Build System 1.0</h2>
+						<p>Calls Unity <a href="https://docs.unity3d.com/ScriptReference/BuildPipeline.html">API</a></p>
+                        <img src="./p3img/build-api.png">
+						<aside class="notes">
+							Just calls Unity and passes data there
+						</aside>
 					</section>
 					<section>
-						<h2>Notions used</h2>
-                        <p><strong>Screen</strong> - Controller, specialized, thin, glues things and provides simple logic, prefab root</p>
-                        <p><strong>Manager</strong> - Controller, reusable, UI agnostic, heavy logic, prefab root can have settings</p>
-                        <p><strong>Panel</strong> - big UI set of elements seen together - can have interface to raise level of abstraction, sometimes reusable,  prefab root</p>
-                        <p><strong>Item</strong> - UI related model data</p>
+						<h2>Build System 1.0</h2>
+						<p>Relies on Unity <a href="https://docs.unity3d.com/Manual/CommandLineArguments.html">args</a></p>
+						<p>Generate txt in Resources for rutime</p>
+						<p>Simple configs (Defines, debug flag, bundle)</p>
 					</section>
+					<aside class="notes">
+						The rest relies on command line arguments that Unity already has,
+                        addin some little stuff like gereting
+                        txt file that is Stored in Resources and accessible in ruttime, 
+						(build number, that had to be passed with command line args, version and just dupes Unity Application)
+					</aside>
+				</section>
+
+				<section>
 					<section>
-						<h2>Screens</h2>
-                        <p>In Color - nonlinear</p>
-                        <img src="./img/fsm.png">
-					</section>
-					<section>
-						<h2>Screens</h2>
-                        <p>Editor time yaml</p>
-                        <img src="./img/yaml.png">
-					</section>
-					<section>
-						<h2>Screens</h2>
-                        <p>Really just matrix</p>
-                        <img src="./img/serial.png">
-					</section>
-					<section>
-						<h2>Animations hell</h2>
-                        <p>CDM failed badly at that point</p>
-						<p>Color did better, but still has issues</p>
-					</section>
-					<section>
-						<h2>Transitions</h2>
-                        <p>Trigger initiates</p>
-						<p>Request is sent</p>
-						<p>Wait for confirmation</p>
-						<p>Callbacks for each phase</p>
-					</section>
-					<section>
-						<h2>Singletons</h2>
-                        <p>Most common pattern with most bad reputation</p>
+                        <h2>Issues</h2>
                         <ul>
-                            <li>Bob's Singleton+</li>
-                            <li>PersistentSingleton</li>
+                            <li>Bad, legacy code</li>
+                            <li>No modern features\platforms</li>
+                            <li>Hard to extend</li>
+                            <li>Assumes centralization (Jenkins)</li>
+                            <li>Local and BuildNode builds are too separated</li>
                         </ul>
-					</section>
-					<section>
-						<h2>Singletons</h2>
-                        <img src="./img/order.png">
-					</section>
-					<section>
-						<h2>Singletons</h2>
-						<p>Merging into one root</p>
-                        <img src="./img/sin.png">
-					</section>
-					<section>
-						<h2>Singletons</h2>
-						<p>Controlled instantiation</p>
-                        <img src="./img/sin2.png">
-					</section>
-					<section>
-						<h2>DI</h2>
-						<p>Highly controversial</p>
-						<p>Most C# impl use reflexion</p>
-						<p>In simple case just have derived behavior with vars</p>
-					</section>
-					<section>
-						<h2>Items & Content manager</h2>
-						<p>SO - great but loads each internal object</p>
-						<p>Split description (Item) and date (Content)</p>
-						<p>Items are used were selection choise made</p>
-						<p>Once it made, data is loaded</p>
-					</section>
-					<section>
-						<h2>Content manager</h2>
-						<p>Cannot reference directly</p>
-						<p>Need be string id</p>
-						<p>But need an interface</p>
-					</section>
-					<section>
-						<h2>Content data</h2>
-                        <img src="./img/contentm.png">
-					</section>
-					<section>
-						<h2>Actual setup</h2>
-                        <img src="./img/ggidc.png">
-                        <img src="./img/ggidv.png">
-					</section>
-					<section>
-						<h2>Actual setup</h2>
-                        <img src="./img/croom.png">
-					</section>
-					<section>
-						<h2>Code/Scene generation</h2>
-                        <img src="./img/gen.png">
+                        <aside class="notes">
+							Why rewrite - developers love rewriting stuff
+							Well of course -- bad, not moders
+                            Now why not update? -- hard to extend
+							Couple ex: Trying to add hololens support - bummer,  New options - iOS stuff - bummer
+                        </aside>
 					</section>
 				</section>
 
